@@ -8,6 +8,8 @@ import ge.vako.testrestapi.model.CustomerDTO;
 import ge.vako.testrestapi.model.CustomerListDTO;
 import ge.vako.testrestapi.repositories.CustomerRepository;
 import ge.vako.testrestapi.services.CustomerService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -26,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author vako
  */
+@Api(description="This is my Customer Controller")
 @RestController
 @RequestMapping(CustomerController.BASE_URL)
 public class CustomerController {
@@ -37,13 +40,13 @@ public class CustomerController {
     public CustomerController(CustomerService customerService) {
         this.customerService = customerService;
     }
-
+    @ApiOperation(value="This will get a list of customers", notes = "these are some notes about the API.")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public CustomerListDTO getListOfCustomers(){
         return new CustomerListDTO(customerService.getAllCustomers());
     }
-
+    
     @GetMapping({"/{id}"})
     @ResponseStatus(HttpStatus.OK)
     public CustomerDTO getCustomerById(@PathVariable Long id){
